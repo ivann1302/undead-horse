@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Vinyl from './Vinyl.jsx';
 import track from '../LOSHAD (MINUS).mp3';
 
 export default function App() {
   const audioRef = useRef(null);
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -12,29 +13,58 @@ export default function App() {
       return undefined;
     }
 
-    const playAudio = () => {
-      audio.play().catch(() => {});
-    };
+    audio.play().then(() => {
+      setHasStarted(true);
+    }).catch(() => {});
 
-    playAudio();
-    window.addEventListener('pointerdown', playAudio, { once: true });
-    window.addEventListener('keydown', playAudio, { once: true });
+    return undefined;
+  }, []);
+
+  const startExperience = useCallback(() => {
+    const audio = audioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    audio.play().then(() => {
+      setHasStarted(true);
+    }).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (hasStarted) {
+      return undefined;
+    }
+
+    window.addEventListener('keydown', startExperience);
+    window.addEventListener('pointerdown', startExperience);
 
     return () => {
-      window.removeEventListener('pointerdown', playAudio);
-      window.removeEventListener('keydown', playAudio);
+      window.removeEventListener('keydown', startExperience);
+      window.removeEventListener('pointerdown', startExperience);
     };
-  }, []);
+  }, [hasStarted, startExperience]);
 
   return (
     <main className="site" aria-label="Undead Horse">
       <div className="container">
         <Vinyl />
       </div>
+      {!hasStarted && (
+        <div
+          className="start-screen"
+          role="button"
+          tabIndex={0}
+          onClick={startExperience}
+          onKeyDown={startExperience}
+        >
+          <p className="start-text">Нажми любую клавишу</p>
+        </div>
+      )}
       <audio
         ref={audioRef}
         src={track}
-        autoPlay
         loop
         playsInline
         preload="auto"
