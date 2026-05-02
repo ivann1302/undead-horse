@@ -97,24 +97,115 @@ body {
   filter: contrast(1.08) saturate(0.92);
 }
 
-.vinyl-halo {
+.solar-corona {
   position: absolute;
-  inset: -2.2%;
+  inset: -7%;
+  z-index: 0;
   border-radius: 50%;
-  z-index: 1;
   background:
     radial-gradient(
       circle,
-      transparent 61%,
-      rgba(255, 238, 92, 0.62) 64%,
-      rgba(255, 163, 16, 0.42) 68%,
-      rgba(255, 239, 134, 0.16) 73%,
-      rgba(255, 255, 255, 0.06) 78%,
-      transparent 84%
+      transparent 53%,
+      rgba(255, 248, 145, 0.98) 55%,
+      rgba(255, 178, 0, 0.84) 58%,
+      rgba(255, 72, 0, 0.48) 63%,
+      rgba(157, 12, 0, 0.24) 69%,
+      transparent 77%
+    ),
+    conic-gradient(
+      from -12deg,
+      transparent 0deg,
+      rgba(255, 71, 0, 0.42) 13deg,
+      rgba(255, 195, 0, 0.8) 24deg,
+      transparent 38deg,
+      rgba(255, 83, 0, 0.5) 55deg,
+      rgba(255, 232, 57, 0.82) 69deg,
+      transparent 83deg,
+      rgba(255, 96, 0, 0.4) 103deg,
+      rgba(255, 178, 0, 0.72) 118deg,
+      transparent 136deg,
+      rgba(255, 55, 0, 0.45) 158deg,
+      rgba(255, 211, 24, 0.78) 177deg,
+      transparent 193deg,
+      rgba(255, 92, 0, 0.4) 214deg,
+      rgba(255, 184, 0, 0.76) 232deg,
+      transparent 251deg,
+      rgba(255, 66, 0, 0.58) 271deg,
+      rgba(255, 217, 41, 0.92) 291deg,
+      rgba(255, 98, 0, 0.58) 312deg,
+      transparent 333deg,
+      rgba(255, 193, 0, 0.76) 348deg,
+      transparent 360deg
     );
-  filter: blur(3px);
-  opacity: 0.72;
+  filter: blur(3px) contrast(1.32) saturate(1.45);
+  opacity: 0.96;
+  transform-origin: center;
+  animation:
+    eclipse-flame 4.8s ease-in-out infinite,
+    eclipse-drift 26s linear infinite;
   pointer-events: none;
+}
+
+.solar-corona::before,
+.solar-corona::after {
+  content: "";
+  position: absolute;
+  inset: 2%;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      ellipse at 50% 82%,
+      rgba(255, 220, 39, 0.95) 0%,
+      rgba(255, 88, 0, 0.8) 18%,
+      rgba(128, 9, 0, 0.28) 38%,
+      transparent 58%
+    ),
+    conic-gradient(
+      from 18deg,
+      transparent 0deg,
+      rgba(255, 224, 52, 0.62) 16deg,
+      rgba(255, 68, 0, 0.5) 31deg,
+      transparent 48deg,
+      transparent 78deg,
+      rgba(255, 205, 17, 0.56) 99deg,
+      rgba(255, 74, 0, 0.42) 115deg,
+      transparent 132deg,
+      transparent 173deg,
+      rgba(255, 222, 46, 0.6) 194deg,
+      rgba(255, 78, 0, 0.46) 212deg,
+      transparent 229deg,
+      transparent 263deg,
+      rgba(255, 231, 61, 0.82) 286deg,
+      rgba(255, 67, 0, 0.66) 312deg,
+      transparent 336deg,
+      transparent 360deg
+    );
+  mask-image:
+    radial-gradient(
+      circle,
+      transparent 0%,
+      transparent 52%,
+      #000 57%,
+      #000 70%,
+      transparent 79%
+    );
+  mix-blend-mode: screen;
+  transform-origin: center;
+  animation: eclipse-prominence 12s ease-in-out infinite;
+}
+
+.solar-corona::after {
+  inset: -1%;
+  background:
+    radial-gradient(
+      ellipse at 50% 88%,
+      rgba(255, 137, 0, 0.72) 0%,
+      rgba(255, 36, 0, 0.38) 28%,
+      transparent 56%
+    );
+  filter: blur(8px) saturate(1.4);
+  opacity: 0.7;
+  animation: eclipse-bottom-flare 3.8s ease-in-out infinite;
 }
 
 .vinyl-shine {
@@ -176,8 +267,66 @@ body {
   }
 }
 
+@keyframes eclipse-flame {
+  0%,
+  100% {
+    opacity: 0.88;
+    scale: 0.992;
+  }
+
+  50% {
+    opacity: 1;
+    scale: 1.018;
+  }
+}
+
+@keyframes eclipse-drift {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes eclipse-prominence {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: rotate(0deg) scale(0.99);
+  }
+  
+  45% {
+    opacity: 1;
+    transform: rotate(8deg) scale(1.035);
+  }
+
+  72% {
+    opacity: 0.82;
+    transform: rotate(-4deg) scale(1.01);
+  }
+}
+
+@keyframes eclipse-bottom-flare {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: scaleX(0.92) scaleY(0.84);
+  }
+
+  42% {
+    opacity: 0.86;
+    transform: scaleX(1.08) scaleY(1.03);
+  }
+
+  68% {
+    opacity: 0.62;
+    transform: scaleX(1) scaleY(0.92);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .vinyl {
+  .vinyl,
+  .solar-corona,
+  .solar-corona::before,
+  .solar-corona::after {
     animation: none;
   }
 }
