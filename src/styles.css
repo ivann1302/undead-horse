@@ -52,7 +52,7 @@ body {
   min-height: 100vh;
   padding: 0;
   background: #000;
-  color: #ffe346;
+  color: rgb(255, 128, 20);
   cursor: default;
 }
 
@@ -68,7 +68,7 @@ body {
 
 .start-screen:hover .start-text,
 .start-screen:focus-visible .start-text {
-  color: #fff4a2;
+  color: rgb(255, 128, 20);
 }
 
 .start-screen:focus-visible {

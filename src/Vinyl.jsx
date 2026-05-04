@@ -1,5 +1,5 @@
 import FlameRing from './FlameRing.jsx';
-import vinylImage from '../vinyl2.png';
+import vinylImage from '../vinyl3.png';
 
 export default function Vinyl() {
   return (
