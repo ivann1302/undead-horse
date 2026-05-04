@@ -69,7 +69,7 @@ export default function App() {
         playsInline
         preload="auto"
       />
-      <а href="http://project42-studio.ru/" target="_blank" rel="nooper noreferrer"></а>
+      <a href="http://project42-studio.ru/" target="_blank" rel="noopener noreferrer"></a>
     </main>
   );
 }
